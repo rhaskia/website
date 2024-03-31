@@ -31,7 +31,10 @@ fn main() {
 fn App() -> Element {
     rsx! {
         Header {}
-        Router::<Route> {}
+        div {
+            id: "content",
+            Router::<Route> {}
+        }
     }
 }
 
