@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use crate::Route;
 
 pub fn Header() -> Element {
     rsx!{
@@ -6,11 +7,19 @@ pub fn Header() -> Element {
             class: "header",
             div {
                 class: "header-left",
-                "rhaskia"
+                Link {
+                    to: Route::Home {},
+                    "home"
+                }
             }
             div {
                 class: "header-right",
+                Link {
+                    to: Route::BlogList {},
+                    "󱉟 blog"
+                }
             }
         }
+        Outlet::<Route>{}
     }
 }

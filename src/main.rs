@@ -12,12 +12,25 @@ use home::Home;
 
 #[derive(Clone, Routable, Debug, PartialEq)]
 enum Route {
-    #[route("/")]
-    Home {},
-    #[route("/blog/:id")]
-    Blog { id: i32 },
-    #[route("/blog/")]
-    BlogList {}
+    #[layout(Wrapper)]
+        #[route("/")]
+        Home {},
+        #[route("/blog/:id")]
+        Blog { id: i32 },
+        #[route("/blog/")]
+        BlogList {}
+}
+
+#[component]
+pub fn App() -> Element {
+    rsx!{ Router::<Route> {} }
+}
+
+pub fn Wrapper() -> Element {
+    rsx!{
+        Header {}
+        //Outlet::<Route> {}
+    }
 }
 
 fn main() {
@@ -26,15 +39,5 @@ fn main() {
     console_error_panic_hook::set_once();
 
     launch(App);
-}
-
-fn App() -> Element {
-    rsx! {
-        Header {}
-        div {
-            id: "content",
-            Router::<Route> {}
-        }
-    }
 }
 
