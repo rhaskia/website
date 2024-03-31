@@ -7,9 +7,10 @@ pub fn Home() -> Element {
     rsx! {
         div {
             class: "page home",
-            h1 { "High-Five counter: {count}" }
-            button { onclick: move |_| count += 1, "Up high!" }
-            button { onclick: move |_| count -= 1, "Down low!" }
+            h1 { "About me" }
+            pre {
+                "hi! I'm rhaskia, a programmer and game developer"
+            }
         }
     }
 }

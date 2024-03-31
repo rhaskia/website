@@ -29,7 +29,6 @@ pub fn App() -> Element {
 pub fn Wrapper() -> Element {
     rsx!{
         Header {}
-        //Outlet::<Route> {}
     }
 }
 
