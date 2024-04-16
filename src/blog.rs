@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use crate::Route;
 
 #[component]
-pub fn Blog(id: i32) -> Element {
+pub fn Blog(id: String) -> Element {
     rsx! {
         div {
             class: "page blog",

@@ -5,10 +5,12 @@ use log::LevelFilter;
 
 mod blog;
 mod home;
-mod header;
+mod tree;
+mod nvimbar;
 use blog::{Blog, BlogList};
-use header::Header;
 use home::Home;
+use tree::Tree;
+use nvimbar::NvimBar;
 
 #[derive(Clone, Routable, Debug, PartialEq)]
 enum Route {
@@ -16,7 +18,7 @@ enum Route {
         #[route("/")]
         Home {},
         #[route("/blog/:id")]
-        Blog { id: i32 },
+        Blog { id: String },
         #[route("/blog/")]
         BlogList {}
 }
@@ -26,9 +28,15 @@ pub fn App() -> Element {
     rsx!{ Router::<Route> {} }
 }
 
+#[component]
 pub fn Wrapper() -> Element {
     rsx!{
-        Header {}
+        div {
+            class: "page-tree-div",
+            Tree {}
+            Outlet::<Route> {} 
+        }
+        NvimBar {}
     }
 }
 

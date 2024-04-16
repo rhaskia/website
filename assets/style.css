@@ -5,28 +5,41 @@
   src: url("fonts/JetBrainsMonoNerdFontMono-Medium.ttf");
 }
 
+:root {
+    --font: 16px;
+}
+
+html { height: 100%; }
+
+html, body {
+    display: flex;
+    flex: 1 1 0;
+}
+
 * {
     font-family: "JetBrainsMono";
 }
 
 body {
-    margin: 0;
-    color: var(--white);
-    background-color: #1d2021;
+    /* color: var(--white); */
+    /* background-color: #1d2021; */
 }
 
 .page {
+    display: flex;
     margin: 8px;
-    color: var(--white);
+    flex: 1 1 0;
+    flex-direction: column;
+    /* color: var(--white); */
 }
 
 a {
-    color: var(--light-green);
+    /* color: var(--light-green); */
 }
 
 button {
-    color: var(--black);
-    background: var(--white);
+    /* color: var(--black); */
+    /* background: var(--white); */
     border: none;
     border-radius: 0px;
     margin: 10px 0;
@@ -36,10 +49,17 @@ h1 {
     font-size: 28px;
 }
 
+#main {
+    display: flex;
+    flex-grow: 1;
+    font-size: var(--font);
+    flex-direction: column;
+}
+
 .header {
-  background-color: var(--bg1); /* Background color */
-  color: var(--white); /* Text color */
-  font-size: 14px;
+  /* background-color: var(--bg1); /* Background color */ */
+  /* color: var(--white); /* Text color */ */
+  font-size: var(--font);
   height: 15; /* Adjust height as needed */
   padding: 5px 10px; /* Adjust padding as needed */
   display: flex;
@@ -63,4 +83,36 @@ h1 {
 
 .header .item:last-child {
   margin-right: 0;
+}
+
+.tree {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px gray solid;
+    padding-right: var(--font);
+    margin: 0;
+    font-size: var(--font);
+}
+
+.folder-link {
+    margin-left: calc(var(--rec * 14px));
+    font-size: var(--font);
+}
+
+.page-tree-div {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.folder-button {
+    display: inline;
+    background: transparent;
+    font-size: var(--font);
+    margin:0;
+    padding: 0;
+}
+.topbar{
+    width: 100%;
+    background: gray;
 }
