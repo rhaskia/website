@@ -1,65 +1,54 @@
-use dioxus::prelude::*;
+use crate::blog::{get_blogs, BlogFile};
 use crate::Route;
+use dioxus::prelude::*;
 use dioxus::router::components::IntoRoutable;
 
-#[component] 
+#[component]
 pub fn Tree() -> Element {
+    let blogs = use_resource(get_blogs);
+
     rsx! {
         pre {
             id: "tree",
             class: "tree",
             r#"~/website"#
 
-            TreeFolder {
-                to: Route::BlogList {}.into(),
-                name: "blog",
-                rec: 1,
-                BlogTree {}
+            if let Some(Ok(blog)) = &*blogs.read_unchecked() {
+                TreeFolder { lead: "assets/blog/", file: blog.clone(), rec: 0, indent: "", icon: "" }
             }
         }
     }
 }
 
-pub fn BlogTree() -> Element {
-    rsx! {
-        span {
-            " │ 󰈙 "
-            Link {
-                to: Route::Blog { id: "1".to_string() },
-                "blog 1"
-            }
-        }
-        span {
-            " ╰ 󰈙 "
-            Link {
-                to: Route::Blog { id: "1".to_string() },
-                "blog 2"
-            }
-        }
-    }
-}
-
-#[component] 
-pub fn TreeFolder(to: IntoRoutable, name: String, children: Element, rec: usize) -> Element {
+#[component]
+pub fn TreeFolder(lead: String, file: BlogFile, rec: usize, indent: String, icon: String) -> Element {
     let mut open = use_signal(|| false);
-    let symbol = use_memo(move || if open() { "   " } else { "   " });
 
     rsx! {
-        span {
-            style: "--rec: {rec}",
-            button {
-                //display: "inline",
-                class: "folder-button",
-                onclick: move |_| open.set(!open()),
-                "{symbol}"
-            }
-            Link {
-                to,
-                "{name}"
-            }
-        }
-        if open() {
-            {children}
+        match file {
+            BlogFile::Folder { ref path, ref children } => rsx! { 
+                div {
+                    onclick: move |_| open.set(!open()),
+                    {format!("{indent}{}", if open() { " " } else { " " })},
+                    if open() {
+                        span { style: "color: var(--light-blue)", " {path}" }
+                    } else {
+                        span { style: "color: var(--light-blue)", " {path}" }
+                    }
+                }
+                if open() {
+                    for (i, child) in children.iter().enumerate() {
+                        TreeFolder { 
+                            lead: "{lead}{path}/",
+                            file: child.clone(),
+                            rec: rec + 1,
+                            indent: indent.to_owned() + if i >= child.len() - 1 {"╰ "} else {"│ "},
+                            icon: icon.clone()
+                        }
+                    }
+                }
+            },
+            BlogFile::File { path } => rsx! { div { "{indent}{icon} {path}" } },
         }
     }
 }

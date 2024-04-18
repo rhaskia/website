@@ -21,20 +21,21 @@ html, body {
 }
 
 body {
-    /* color: var(--white); */
-    /* background-color: #1d2021; */
+    color: var(--white);
+    background-color: var(--black);
 }
 
 .page {
     display: flex;
     margin: 8px;
-    flex: 1 1 0;
+    flex: 10 1 0;
+    flex-grow: 10;
     flex-direction: column;
-    /* color: var(--white); */
+    color: var(--fg);
 }
 
 a {
-    /* color: var(--light-green); */
+    color: var(--light-green);
 }
 
 button {
@@ -92,6 +93,7 @@ h1 {
     padding-right: var(--font);
     margin: 0;
     font-size: var(--font);
+    width: 10%;
 }
 
 .folder-link {

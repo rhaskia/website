@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
-
 use dioxus::prelude::*;
+use serde::{Deserialize, Serialize};
 use log::LevelFilter;
 
 mod blog;
@@ -12,7 +12,8 @@ use home::Home;
 use tree::Tree;
 use nvimbar::NvimBar;
 
-#[derive(Clone, Routable, Debug, PartialEq)]
+
+#[derive(Clone, Routable, Debug, PartialEq, Deserialize, Serialize)]
 enum Route {
     #[layout(Wrapper)]
         #[route("/")]
@@ -25,7 +26,9 @@ enum Route {
 
 #[component]
 pub fn App() -> Element {
-    rsx!{ Router::<Route> {} }
+    rsx!{ 
+        Router::<Route> {}
+    }
 }
 
 #[component]
@@ -45,6 +48,6 @@ fn main() {
     dioxus_logger::init(LevelFilter::Info).expect("failed to init logger");
     console_error_panic_hook::set_once();
 
-    launch(App);
+    LaunchBuilder::fullstack().launch(App);
 }
 

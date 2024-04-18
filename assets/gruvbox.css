@@ -1,4 +1,6 @@
 :root {
+    --fg: var(--white);
+    --bg: var(--black);
     --white: #fbf1c7;
     --black: #1d2021;
     --grey: #928374;
