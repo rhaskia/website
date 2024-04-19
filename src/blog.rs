@@ -9,7 +9,7 @@ pub fn Blog(id: String) -> Element {
     rsx! {
         div {
             class: "page blog",
-            "Blog post {id}"
+            "Blog post {id:?}"
         }
     }
 }
@@ -69,8 +69,10 @@ pub fn dir_get_blogs(dir: &mut ReadDir) -> Result<BlogFile, ServerFnError> {
             folder.set_path(name);
             children.push(folder);
         } else {
+            let path = dir.path();
+            let name = path.file_stem().unwrap().to_str().unwrap();
             children.push(BlogFile::File { path: name.to_string() });
         }
     }
-    Ok(BlogFile::Folder { path: String::from("blogs"), children })
+    Ok(BlogFile::Folder { path: String::from("blog"), children })
 }

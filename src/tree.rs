@@ -19,7 +19,7 @@ pub fn Tree() -> Element {
 
             if let Some(Ok(blog)) = &*blogs.read_unchecked() {
                 TreeFolder { 
-                    lead: "/blog/",
+                    lead: "",
                     file: blog.clone(),
                     rec: 0,
                     indent: "",
@@ -28,7 +28,7 @@ pub fn Tree() -> Element {
                 }
             }
             TreeFolder {
-                lead: "/projects/",
+                lead: "",
                 file: projects,
                 rec: 0,
                 indent: "",
@@ -76,7 +76,14 @@ pub fn TreeFolder(
                     }
                 }
             },
-            BlogFile::File { path } => rsx! { div { " {indent} {icon} {path}" } },
+            BlogFile::File { path } => rsx! { 
+                span { " {indent} {icon} " 
+                    a { 
+                        href: "{lead}{path}",
+                        "{path}" 
+                    } 
+                }
+            },
         }
     }
 }

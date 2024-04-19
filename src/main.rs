@@ -7,11 +7,14 @@ mod blog;
 mod home;
 mod tree;
 mod nvimbar;
+mod notfound;
+mod projects;
 use blog::{Blog, BlogList};
 use home::Home;
 use tree::Tree;
 use nvimbar::NvimBar;
-
+use notfound::Page404;
+use projects::Projects;
 
 #[derive(Clone, Routable, Debug, PartialEq, Deserialize, Serialize)]
 enum Route {
@@ -20,8 +23,12 @@ enum Route {
         Home {},
         #[route("/blog/:id")]
         Blog { id: String },
-        #[route("/blog/")]
-        BlogList {}
+        #[route("/blogs/")]
+        BlogList {},
+        #[route("/:..segments")]
+        Page404 { segments: Vec<String> },
+        #[route("/projects/:project")]
+        Projects { project: String },
 }
 
 #[component]
