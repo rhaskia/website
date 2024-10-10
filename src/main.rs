@@ -1,52 +1,52 @@
-#![allow(non_snake_case)]
-use dioxus::prelude::*;
-use serde::{Deserialize, Serialize};
-use log::LevelFilter;
-
-mod blog;
 mod home;
-mod tree;
-mod nvimbar;
-mod notfound;
-mod projects;
-use blog::{Blog, BlogList};
+mod window;
+mod terminal;
 use home::Home;
-use tree::Tree;
-use nvimbar::NvimBar;
-use notfound::Page404;
-use projects::Projects;
+use terminal::Terminal;
+use window::Window;
+
+use dioxus::prelude::*;
+use log::LevelFilter;
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Routable, Debug, PartialEq, Deserialize, Serialize)]
 enum Route {
     #[layout(Wrapper)]
-        #[route("/")]
-        Home {},
-        #[route("/blog/:id")]
-        Blog { id: String },
-        #[route("/blogs/")]
-        BlogList {},
-        #[route("/:..segments")]
-        Page404 { segments: Vec<String> },
-        #[route("/projects/:project")]
-        Projects { project: String },
+    // // #[route("/:..segments")]
+    // // Page404 { segments: Vec<String> },
+    #[route("/")]
+    Home {},
+    // #[route("/blogpost/:id")]
+    // Blog { id: String },
+    // // BlogList {},
+    // #[route("/projects/:project")]
+    // Projects { project: String },
 }
 
 #[component]
 pub fn App() -> Element {
-    rsx!{ 
+    rsx! {
         Router::<Route> {}
     }
 }
 
 #[component]
 pub fn Wrapper() -> Element {
-    rsx!{
+    rsx! {
         div {
             class: "page-tree-div",
-            Tree {}
-            Outlet::<Route> {} 
+            Outlet::<Route> {}
+            TaskBar {}
         }
-        NvimBar {}
+    }
+}
+
+#[component]
+pub fn TaskBar() -> Element {
+    rsx! {
+        div {
+            class: "taskbar",
+        }
     }
 }
 
@@ -57,4 +57,3 @@ fn main() {
 
     LaunchBuilder::fullstack().launch(App);
 }
-

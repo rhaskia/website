@@ -1,120 +1,261 @@
-@import url("gruvbox.css");
+html, body {
+    height: 100%;
+}
+
+body
+{
+    background: #61bbcb;
+    display: block;
+    justify-content: center;
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    cursor: url(./cursors/cursor.png) 8 8, move;
+}
+
+.main
+{
+    background: aliceblue;
+    max-width: 400px;
+}
+
+.window
+{
+    position: absolute;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.taskbar
+{
+    width: calc(100% - 30px);
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    rotate: 180deg;
+    height: 50px;
+
+    border-style: ridge;
+    border-width: 1rem;
+    border-image-source: url('./taskbar.png');
+    border-image-slice: 35 35 35 35 fill;
+    border-image-repeat: repeat;
+
+    display: flex;
+
+    z-index: 10;
+}
+
+.window-body
+{
+    position: relative;
+    width: 100%;
+
+    border-style: ridge;
+    border-width: 1rem;
+    border-image-source: url('./window.png');
+    border-image-slice: 40 40 40 40 fill;
+    border-image-repeat: repeat;
+    flex: 1;
+
+    z-index: 1;
+}
+
+.window-header
+{
+    position: relative;
+    width: 100%;
+
+    border-style: ridge;
+    border-width: 1rem;
+    border-image-source: url('./header.png');
+    border-image-slice: 40 40 40 40 fill;
+    border-image-repeat: repeat;
+
+    cursor: url(./cursors/movecursor.png) 8 8, move;
+
+    z-index: 1;
+    font-size: 20px;
+    top: -3px;
+  position: relative;
+  left: 5px;
+}
+
+.theme-button
+{
+    border-style: ridge;
+    border-width: 1rem;
+    border-image-source: url('./buttons/button2.png');
+    border-image-slice: 40 40 40 40 fill;
+    border-image-repeat: repeat;
+    font-size: 13px;
+}
+
+.theme-button:active
+{
+    border-image-source: url('./buttons/buttonpressed.png');
+    border-image-slice: 40 40 30 40 fill;
+}
+
+.header-button
+{
+    display: flex;
+
+    position: sticky;
+    z-index: 5;
+    width: 24px;
+    height: 24px;
+    border: none;
+    top: -3px;
+
+    align-self: flex-end;
+}
+
+.filler{
+    flex-grow: 0.9;
+}
+
+.header-padding{
+    flex-grow: 0.03;
+}
+
+.min
+{
+    background-image: url("./buttons/min.png");
+}
+
+.min:active
+{
+    background-image: url("./buttons/minpressed.png");
+}
+
+.max
+{
+    background-image: url(./buttons/max.png);
+}
+
+.max:active
+{
+    background-image: url("./buttons/maxpressed.png");
+}
+
+.close
+{
+    background-image: url("./buttons/close.png");
+}
+
+.close:active
+{
+    background-image: url("./buttons/closepressed.png");
+}
 
 @font-face {
-  font-family: JetBrainsMono;
-  src: url("fonts/JetBrainsMonoNerdFontMono-Medium.ttf");
+    font-family: 'rhaskiapixel';
+    src: url('./pxl.ttf');
 }
 
-:root {
-    --font: 16px;
+a
+{
+    text-decoration: 0;
+    color: #4b5bab;
+
 }
 
-html { height: 100%; }
-
-html, body {
-    display: flex;
-    flex: 1 1 0;
+a, button
+{
+    cursor: url(./cursors/clickcursor.png) 8 8, auto;
 }
 
-* {
-    font-family: "JetBrainsMono";
+a:hover
+{
+    color: #4da6ff;
 }
 
-body {
-    color: var(--white);
-    background-color: var(--black);
+*
+{
+    font-family: "rhaskiapixel", serif;
+    color: #272736;
 }
 
-.page {
-    display: flex;
-    margin: 8px;
-    flex: 10 1 0;
-    flex-grow: 10;
-    flex-direction: column;
-    color: var(--fg);
+/* Navbar container */
+nav {
+    overflow: hidden;
 }
 
-a {
-    color: var(--light-green);
+/* Links inside the navbar */
+nav a {
+    float: left;
+    color: #606070;
+    text-align: center;
 }
 
-button {
-    /* color: var(--black); */
-    /* background: var(--white); */
+/* The dropdown container */
+.dropdown {
+    float: left;
+    overflow: hidden;
+    display: table;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+    font-size: 20px;
     border: none;
-    border-radius: 0px;
-    margin: 10px 0;
+    outline: none;
+    color: #272736;
+    padding: 3px 12px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
 }
 
-h1 {
-    font-size: 28px;
+/* Add a red background color to navbar links on hover */
+nav a:hover, .dropdown:hover .dropbtn {
+    background-color: #272736;
+    color: #d0d0d8;
 }
 
-#main {
-    display: flex;
-    flex-grow: 1;
-    font-size: var(--font);
-    flex-direction: column;
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #d0d0d8;
+    z-index: 1;
 }
 
-.header {
-  /* background-color: var(--bg1); /* Background color */ */
-  /* color: var(--white); /* Text color */ */
-  font-size: var(--font);
-  height: 15; /* Adjust height as needed */
-  padding: 5px 10px; /* Adjust padding as needed */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Links inside the dropdown */
+.dropdown-content a {
+    float: none;
+    color: #272736;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #272736;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: table-cell;
 }
 
-.header .item {
-  margin-right: 10px; /* Adjust spacing between items */
-}
-
-.header .item:last-child {
-  margin-right: 0;
-}
-
-.tree {
-    display: flex;
-    flex-direction: column;
-    border-right: 1px gray solid;
-    padding-right: var(--font);
-    margin: 0;
-    font-size: var(--font);
-    width: 10%;
-}
-
-.folder-link {
-    margin-left: calc(var(--rec * 14px));
-    font-size: var(--font);
-}
-
-.page-tree-div {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-}
-
-.folder-button {
-    display: inline;
-    background: transparent;
-    font-size: var(--font);
-    margin:0;
-    padding: 0;
-}
-.topbar{
+textarea {
+    background-color: inherit;
+    border: none;
     width: 100%;
-    background: gray;
+    caret-color: #272736;
+    caret-shape: block;
+}
+
+textarea:focus
+{
+    outline: none !important;
+    border-color: #272736;
+
 }
