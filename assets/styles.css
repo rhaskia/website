@@ -78,6 +78,9 @@ body
     cursor: url(./cursors/movecursor.png) 8 8, move;
 
     z-index: 1;
+}
+
+.window-title {
     font-size: 20px;
     top: -3px;
   position: relative;
