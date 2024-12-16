@@ -1,28 +1,32 @@
-use axum::{
-    response::{Html, IntoResponse},
-    routing::get,
-    Router,
-};
-use std::net::SocketAddr;
-use tokio::net::TcpListener;
-use tower_http::services::ServeDir;
+use dioxus::prelude::*;
 
-async fn hello_world() -> &'static str {
-    "Hello world!"
+fn main() {
+    dioxus::web::launch(App);
 }
 
-#[tokio::main]
-async fn main() {
-    let router = Router::new()
-        .route("/", get(|| serve_file("site/index.html")))
-        .nest_service("/assets", ServeDir::new("assets"));
-
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8000));
-    let tcp = TcpListener::bind(&addr).await.unwrap();
-
-    axum::serve(tcp, router).await.unwrap();
+#[component]
+fn App() -> Element {
+    rsx! { Router::<Route> {} }
 }
 
-async fn serve_file(path: &str) -> impl IntoResponse {
-    Html(std::fs::read_to_string(path).unwrap())
+#[derive(Routable, PartialEq, Clone)]
+enum Route {
+    #[route("/")]
+    //#[redirect("/:..segments", |segments: Vec<String>| Route::Home {})]
+    Home {},
+    #[route("/blog")]
+    Blog {},
+}
+
+fn Home() -> Element {
+    todo!()
+}
+
+fn Blog() -> Element {
+    todo!()
+}
+
+#[component]
+fn NotFound(segments: Vec<String>) -> Element {
+    todo!()
 }
