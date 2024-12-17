@@ -1,6 +1,5 @@
 [application]
 name = "website"
-default_platform = "web"
 out_dir = "dist"
 asset_dir = "assets"
 

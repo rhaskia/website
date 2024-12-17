@@ -1,7 +1,8 @@
 use dioxus::prelude::*;
+use dioxus_router::prelude::*;
 
 fn main() {
-    dioxus::web::launch(App);
+    launch(App);
 }
 
 #[component]
@@ -18,12 +19,20 @@ enum Route {
     Blog {},
 }
 
+#[component]
 fn Home() -> Element {
-    todo!()
+    rsx!{
+        h2 {
+            "hello"
+        }
+    }
 }
 
+#[component]
 fn Blog() -> Element {
-    todo!()
+    rsx! {
+        "hi"
+    }
 }
 
 #[component]
