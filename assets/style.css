@@ -1,0 +1,56 @@
+* {
+    font-family: "Fira Sans";
+}
+
+:root {
+    --fg: #1d2021;
+    --bg: #ffffeb;
+    --accent: #4da6ff;
+}
+
+html, body {
+    background: #4da6ff;
+}
+
+#main {
+    max-width: 800px;
+    margin: 1em auto;
+    border-radius: 8px;
+    background: #ffffeb;
+}
+
+nav {
+  flex-direction: row;
+  padding: 2em;
+  padding-top: 2em;
+  display: flex;
+  padding-top: 1em;
+  justify-content: space-between;
+}
+
+section {
+    padding: 2em;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background: #e1e1e6;
+    justify-content: unset;
+    border-radius: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+li {
+    margin: auto;
+}
+
+li::marker {
+    content: "";
+}
+
+a {
+    color: var(--fg);
+}

@@ -8,12 +8,24 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.94"
-tokio = { version = "1.42.0", features = ["rt-multi-thread"]}
-dioxus = { version = "0.6.0", features = ["router", "fullstack"] }
+dioxus = { version = "0.6.0", features = ["fullstack", "router", "web"] }
+serde = "1.0.216"
 
 [features]
 default = []
-web = ["dioxus/web"]
+web = ["dioxus/web", "dioxus/router"]
 desktop = ["dioxus/desktop"]
 mobile = ["dioxus/mobile"]
-fullstack = []
+server = ["dioxus/server"]
+
+[profile]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
