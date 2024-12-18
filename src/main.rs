@@ -35,12 +35,6 @@ enum Route {
     Blog {},
 }
 
-#[component]
-fn Blog() -> Element {
-    rsx! {
-        "hi"
-    }
-}
 
 #[component]
 fn NotFound(segments: Vec<String>) -> Element {
