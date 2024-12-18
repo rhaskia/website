@@ -8,14 +8,14 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.94"
-dioxus = { version = "0.6.0", features = ["fullstack", "router", "web"] }
+chrono = "0.4.39"
+dioxus = { version = "0.6.0", features = ["fullstack", "router"] }
 serde = "1.0.216"
+time = "0.3.37"
 
 [features]
 default = []
-web = ["dioxus/web", "dioxus/router"]
-desktop = ["dioxus/desktop"]
-mobile = ["dioxus/mobile"]
+web = ["dioxus/web"]
 server = ["dioxus/server"]
 
 [profile]

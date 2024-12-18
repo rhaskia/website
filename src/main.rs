@@ -1,3 +1,5 @@
+#![feature(path_file_prefix)]
+
 mod components;
 mod pages;
 
@@ -5,7 +7,7 @@ use dioxus::{document::Link, prelude::*};
 use dioxus_router::prelude::*;
 
 use components::Navbar;
-use pages::Home;
+use pages::*;
 
 fn main() {
     launch(App);
