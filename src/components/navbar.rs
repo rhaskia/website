@@ -11,6 +11,7 @@ pub fn Navbar() -> Element {
             }
 
             ul {
+                class: "navul",
                 li {
                     Link { to: Route::Home {}, "Home" }
                 }

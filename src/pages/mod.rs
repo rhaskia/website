@@ -1,5 +1,5 @@
 mod home;
-pub use home::Home;
+pub use home::*;
 
 mod blog;
-pub use blog::Blog;
+pub use blog::*;

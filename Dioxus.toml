@@ -12,7 +12,7 @@ watch_path = ["src", "assets"]
 index_on_404 = true
 
 [web.resource]
-style = ["./assets/style.css"]
+#style = ["./assets/style.css"]
 script = []
 
 [web.resource.dev]

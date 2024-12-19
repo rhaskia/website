@@ -30,7 +30,7 @@ section {
   padding: 1em 2em;
 }
 
-ul {
+.navul {
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -41,14 +41,18 @@ ul {
     padding-right: 10px;
 }
 
-li {
+.navul li {
     margin: auto;
 }
-
-li::marker {
+.navul li::marker {
     content: "";
 }
 
 a {
     color: var(--fg);
+}
+
+.bloglink {
+    display: flex;
+    gap: 30px;
 }
