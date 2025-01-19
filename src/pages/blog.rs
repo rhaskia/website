@@ -1,12 +1,13 @@
 use chrono::{DateTime, Local};
-use dioxus::prelude::*;
+use dioxus::{prelude::*, logger::tracing::info};
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 use yaml_front_matter::YamlFrontMatter;
+use web_sys::window;
 
 #[component]
 pub fn Blog() -> Element {
-    let blogs = use_resource(get_blogs);
+    let blogs = use_signal(|| vec![("first", "2024-01-01"), ("tokenizer-compress", "2024-04-06")]);
 
     rsx! {
         div {
@@ -14,19 +15,16 @@ pub fn Blog() -> Element {
             section {
                 id: "blogsection",
                 h2 { "Blog Posts" }
-
-
-                match &*blogs.read_unchecked() {
-                    Some(Ok(response)) => rsx!{
-                        for blog in response {
-                            div {
-                                class: "bloglink",
-                                time { datetime: blog.time.clone(), "{blog.time}" }
-                                Link { to: "/post/{blog.link}", "{blog.name}" }
-                            }
+                for blog in blogs() {
+                    div {
+                        class: "bloglink",
+                        h3 { 
+                            display: "inline",
+                            margin: 0,
+                            a { href: "/blog/{blog.0}", "{to_title_case(blog.0)}" }
                         }
-                    },
-                    _ => rsx!{ "..." }
+                        time { datetime: blog.1.clone(), "{blog.1}" }
+                    }
                 }
             }
         }
@@ -36,8 +34,16 @@ pub fn Blog() -> Element {
 #[component]
 pub fn BlogPost(segments: Vec<String>) -> Element {
     let segments = use_signal(|| segments);
-    let title = use_signal(|| to_title_case(&segments()[0]));
-    let post = use_resource(move || async move { load_blog(segments()[0].clone()).await });
+    let file = use_signal(|| segments()[0].clone());
+    let title = use_signal(|| to_title_case(&file()));
+    let post: Resource<Result<(String, Metadata), anyhow::Error>> = use_resource(move || async move { 
+        let domain = window().unwrap().location().origin().unwrap();
+        let url = format!("{domain}/assets/blog/{file}.md"); 
+        info!("{url}");
+        let result = reqwest::get(url)
+            .await?.text().await?; 
+        Ok(load_blog(result))
+    });
 
     rsx! {
         div {
@@ -52,6 +58,9 @@ pub fn BlogPost(segments: Vec<String>) -> Element {
                         p {
                             dangerous_inner_html: "{html}",
                         }
+                    },
+                    Some(Err(err)) => rsx!{
+                        "{err:?}"
                     },
                     _ => rsx!{ "..." },
                 }
@@ -75,55 +84,37 @@ pub struct Metadata {
     tags: Vec<String>,
 }
 
-#[server]
-async fn get_blogs() -> Result<Vec<BlogInfo>, ServerFnError> {
-    let blog_files = std::fs::read_dir("./blog");
-    let mut blogs = Vec::new();
+// async fn get_blogs() -> Result<Vec<BlogInfo>, ServerFnError> {
+//     let blog_files = std::fs::read_dir("./blog");
+//     let mut blogs = Vec::new();
+//
+//     for file in blog_files? {
+//         let file = file?;
+//         let system_time = file.metadata()?.created()?;
+//         let datetime: DateTime<Local> = system_time.into();
+//         let time = datetime.format("%Y-%m-%d").to_string();
+//         let link = file.path().file_prefix().unwrap().to_str().unwrap().to_string();
+//         let file = file.path().display().to_string();
+//         let name = to_title_case(&link);
+//
+//         let blog = BlogInfo { time, name, link, file };
+//
+//         blogs.push(blog);
+//     }
+//
+//     Ok(blogs)
+// }
 
-    for file in blog_files? {
-        let file = file?;
-        let system_time = file.metadata()?.created()?;
-        let datetime: DateTime<Local> = system_time.into();
-        let time = datetime.format("%Y-%m-%d").to_string();
-        let link = file.path().file_prefix().unwrap().to_str().unwrap().to_string();
-        let file = file.path().display().to_string();
-        let name = to_title_case(&link);
-
-        let blog = BlogInfo { time, name, link, file };
-
-        blogs.push(blog);
-    }
-
-    Ok(blogs)
-}
-
-#[server]
-async fn load_blog(link: String) -> Result<(String, Metadata), ServerFnError> {
-    let path_str = "./blog/".to_string() + &link + ".md";
-    let path = Path::new(&path_str);
-    let blog_folder = Path::new("./blog/");
-
-    if !path_is_within_folder(&path, &blog_folder) {
-        return Err(ServerFnError::ServerError("Access denied".to_string()));
-    }
-
-    let file = std::fs::read_to_string(path)?;
+fn load_blog(markdown: String) -> (String, Metadata) {
     let options = pulldown_cmark::Options::all();
-    let parser = pulldown_cmark::Parser::new_ext(&file, options);
+    let parser = pulldown_cmark::Parser::new_ext(&markdown, options);
 
     let mut html_output = String::new();
     pulldown_cmark::html::push_html(&mut html_output, parser);
 
-    let yaml_data = YamlFrontMatter::parse::<Metadata>(&file).unwrap().metadata;
+    let yaml_data = YamlFrontMatter::parse::<Metadata>(&markdown).unwrap().metadata;
 
-    Ok((html_output, yaml_data))
-}
-
-fn path_is_within_folder(path: &Path, folder: &Path) -> bool {
-    let path = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
-    let folder = folder.canonicalize().unwrap_or_else(|_| folder.to_path_buf());
-
-    path.starts_with(&folder)
+    (html_output, yaml_data)
 }
 
 fn to_title_case(s: &str) -> String {

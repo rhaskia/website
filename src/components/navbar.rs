@@ -17,7 +17,7 @@ pub fn Navbar() -> Element {
                 }
 
                 li {
-                    Link { to: Route::Blog {}, "Projects" }
+                    Link { to: Route::Projects {}, "Projects" }
                 }
 
                 li {
@@ -25,7 +25,7 @@ pub fn Navbar() -> Element {
                 }
 
                 li {
-                    Link { to: Route::Blog {}, "Contact" }
+                    Link { to: Route::Contact {}, "Contact" }
                 }
             }
         }

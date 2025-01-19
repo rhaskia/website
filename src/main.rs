@@ -34,10 +34,14 @@ enum Route {
     #[layout(Navbar)]
     #[route("/")]
     Home {},
-    #[route("/blog")]
+    #[route("/blog/")]
     Blog {},
-    #[route("/post/:..segments")]
+    #[route("/blog/:..segments")]
     BlogPost { segments: Vec<String> },
+    #[route("/projects")]
+    Projects { },
+    #[route("/contact")]
+    Contact { },
 }
 
 
