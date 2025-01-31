@@ -13,6 +13,13 @@ pub fn Contact() -> Element {
                     href: "mailto:rhaskiagamedev@gmail.com",
                     "rhaskiagamedev@gmail.com" 
                 }
+                br {}
+                br {}
+                "Github: "
+                a {
+                    href: "https://github.com/rhaskia",
+                    "https://github.com/rhaskia"
+                }
             }
         }
     }

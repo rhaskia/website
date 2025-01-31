@@ -1,10 +1,10 @@
 [application]
-name = "website"
+name = "rhaskia's site"
 out_dir = "dist"
 asset_dir = "assets"
 
 [web.app]
-title = "website"
+title = "rhaskia's site"
 
 [web.watcher]
 reload_html = true
@@ -12,7 +12,7 @@ watch_path = ["src", "assets"]
 index_on_404 = true
 
 [web.resource]
-#style = ["./assets/style.css"]
+style = ["./assets/style.css"]
 script = []
 
 [web.resource.dev]

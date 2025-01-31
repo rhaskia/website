@@ -13,10 +13,14 @@ html, body {
 }
 
 #main {
-    max-width: 800px;
+    max-width: 900px;
     margin: 1em auto;
-    border-radius: 8px;
+    border-image: url(window.png);
+    box-shadow: 0 3px 3px 3px #00000022;
+    border-image-slice: 40;
+    border-image-width: 18px;
     background: #ffffeb;
+    padding-bottom: 20px;
 }
 
 nav {
@@ -31,19 +35,23 @@ section {
 }
 
 .navul {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    background: #e1e1e6;
-    justify-content: unset;
-    border-radius: 6px;
-    padding-left: 10px;
-    padding-right: 10px;
+gap: 20px;
+  justify-content: unset;
+  background: #ffffeb;
+  flex-direction: row;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  border-image: url(border.png) 20 fill;
+  border-image-width: 8px;
+  padding: 13px;
+  padding-bottom: 15px;
 }
 
 .navul li {
     margin: auto;
 }
+
 .navul li::marker {
     content: "";
 }
@@ -61,7 +69,6 @@ a {
 .langtag {
     display: inline-block;
     padding: 2px 10px;
-    border-radius: 20px;
     margin-left: 10px;
 }
 
@@ -69,4 +76,45 @@ a {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.projectblock {
+display: flex;
+  flex-direction: column;
+  width: calc(50% - 30px);
+  padding: 10px;
+  border: 2px solid #e1e1e6;
+  border-radius: 8px;
+  box-shadow: 0 3px 3px 3px #0000000a;
+  text-decoration: none;
+  border-image: url(border.png) 20 fill;
+  border-image-width: 8px;
+}
+
+.projectcontainer {
+    padding: 1em 2em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+img {
+  width: 100%;  /* Fill the container */
+  max-height: 200px; /* Limit height */
+  object-fit: contain; /* No cropping, keeps aspect ratio */
+  object-position: center; /* Center the image */
+  display: block; /* Removes extra bottom space */
+}
+
+.preview .projectblock {
+  width: calc(33% - 30px);
+  font-size: 75%;
+}
+
+.projectcontainer.preview {
+    padding: 0;
+}
+
+.projectblock:hover {
+    box-shadow: 0 3px 3px 3px #00000021;
 }

@@ -5,9 +5,13 @@ use std::path::Path;
 use yaml_front_matter::YamlFrontMatter;
 use web_sys::window;
 
+pub fn get_blogs() -> Vec<(&'static str, &'static str)> {
+    vec![("tokenizer-compress", "2024-04-06")]
+}
+
 #[component]
 pub fn Blog() -> Element {
-    let blogs = use_signal(|| vec![("first", "2024-01-01"), ("tokenizer-compress", "2024-04-06")]);
+    let blogs = use_signal(get_blogs);
 
     rsx! {
         div {
@@ -117,7 +121,7 @@ fn load_blog(markdown: String) -> (String, Metadata) {
     (html_output, yaml_data)
 }
 
-fn to_title_case(s: &str) -> String {
+pub fn to_title_case(s: &str) -> String {
     let mut result = String::new();
     let mut last_space = true;
 

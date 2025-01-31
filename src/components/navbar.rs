@@ -25,7 +25,7 @@ pub fn Navbar() -> Element {
                 }
 
                 li {
-                    Link { to: Route::Contact {}, "Contact" }
+                    Link { to: Route::Contact {}, "Links" }
                 }
             }
         }
